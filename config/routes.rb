@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   root to: "books#main"
+  # TODO: "/manage-books" or something like that?
   get "/books" => "books#index"
 
   namespace :api do
