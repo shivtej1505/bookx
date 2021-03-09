@@ -50,4 +50,8 @@ test:
 #
 production:
   <<: *default
-  url: <%= ENV['CLEARDB_DATABASE_URL'] %>
+  database: heroku_30190f567dfd034
+  username: b6332bab441aeb
+  password: 680f17
+  host: us-cdbr-east-03.cleardb.com
+  port: 3306
