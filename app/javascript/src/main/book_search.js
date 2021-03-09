@@ -6,11 +6,18 @@ function BookSearch() {
 
   let cancelToken;
 
+  // TODO: Move to better place
+  const defaultHeaders = {
+    'Accept': 'application/json',
+    'Content-Type': 'application/json'
+  }
+
   // TODO
   // Only query required fields
   // Only search if char >= 3
   // Only fetching top 10 results. What about other stuff?
   // loading??
+  // Show total number of results??
   function onchange(event) {
     console.log(event.target.value);
 
@@ -27,10 +34,13 @@ function BookSearch() {
       return;
     }
 
+    // TODO: Better place
+    let fields = 'totalItems,items(id,volumeInfo/title,volumeInfo/authors)';
     axios({
       method: 'get',
-      url: `https://www.googleapis.com/books/v1/volumes?q=${query}`,
-      cancelToken: cancelToken.token
+      url: `https://www.googleapis.com/books/v1/volumes?q=${query}&fields=${fields}`,
+      cancelToken: cancelToken.token,
+      headers: defaultHeaders,
     }).then(({data}) => {
       if (data.totalItems > 0) {
         setBooks(data.items);
@@ -45,6 +55,25 @@ function BookSearch() {
 
   function addBook(book) {
     console.log(book);
+
+    let data = {
+      id: book.id,
+      title: book.volumeInfo.title,
+      authors: book.volumeInfo.authors
+    }
+
+    axios({
+      method: 'post',
+      url: `http://localhost:3000/api/v1/books`,
+      data: JSON.stringify(data),
+      headers: defaultHeaders,
+    }).then((response) => {
+      console.log(response);
+      console.log("book successfully added");
+    }).catch((error) => {
+      // TODO: What to do in case of error?
+      console.log(error);
+    });
   }
 
   function _emptyResultsUi() {
