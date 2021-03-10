@@ -2,7 +2,7 @@ module Api
   module V1
     class BooksController < ApiController
       def index
-        render json: Book.in_stock.select(:id, :google_id, :status, :inventory), status: 200
+        render json: Book.in_stock.select(:id, :title, :google_id, :status, :inventory).order(:id), status: 200
       end
 
       def create

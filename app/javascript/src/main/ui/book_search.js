@@ -10,7 +10,6 @@ function BookSearch() {
 
   useEffect(() => {
     listBookApi().then(data => {
-      console.log(data);
       setAvailableBooks(data);
     })
   }, []);

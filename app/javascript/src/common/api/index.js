@@ -1,7 +1,7 @@
 import {
   add as addBookApi,
   list as listBookApi,
-  updateInventory as updateBookInventory
+  updateInventory as updateBookInventoryApi
 } from './books';
 
-export { addBookApi, listBookApi, updateBookInventory };
+export { addBookApi, listBookApi, updateBookInventoryApi };

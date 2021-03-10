@@ -24,8 +24,8 @@ async function add(data) {
 
 async function updateInventory(book_id, inventory) {
   return axios({
-    method: 'post',
-    url: `${BASE_API_URL}/books`,
+    method: 'put',
+    url: `${BASE_API_URL}/books/${book_id}`,
     data: JSON.stringify({
       id: book_id,
       inventory: inventory
