@@ -2,10 +2,7 @@ module Api
   module V1
     class BooksController < ApiController
       def index
-        render json: {
-          id: 1,
-          name: "lite"
-        }
+        render json: Book.in_stock.select(:id, :google_id, :status, :inventory), status: 200
       end
 
       def create
@@ -17,11 +14,21 @@ module Api
       end
 
       def update
-
+        book = Book.find(params[:id])
+        book.update(params.permit(:title, :status, :inventory))
+        render json: {
+          success: true,
+          msg: 'success'
+        }, status: 200
       end
 
       def delete
-
+        book = Book.find(params[:id])
+        book.destroy!
+        render json: {
+          success: true,
+          msg: 'success'
+        }, status: 200
       end
     end
   end

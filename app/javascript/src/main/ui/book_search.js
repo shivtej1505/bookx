@@ -1,10 +1,29 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 
-import { googleBookSearchApi, addBookApi } from '../api';
+import { googleBookSearchApi } from '../api';
+import { addBookApi, listBookApi } from '../../common/api'
 
 function BookSearch() {
   const [books, setBooks] = useState([]);
+  const [availableBooks, setAvailableBooks] = useState([]);
   let previousRequestCancelCallback;
+
+  useEffect(() => {
+    listBookApi().then(data => {
+      console.log(data);
+      setAvailableBooks(data);
+    })
+  }, []);
+
+  function setBooksWithAvailability(bookResult) {
+    let booksWithAvailability = [];
+    let availableBookIds = availableBooks.map(({google_id}) => google_id );
+    bookResult.map((bookResult) => {
+      booksWithAvailability.push({...bookResult, isAvailable: availableBookIds.includes(bookResult.id)})
+    })
+    setBooks(booksWithAvailability);
+  }
+
 
   async function onchange(event) {
     if (previousRequestCancelCallback !== undefined) {
@@ -21,7 +40,7 @@ function BookSearch() {
 
     let bookResults = await searchRequest;
     if (bookResults && typeof bookResults === typeof []) {
-      setBooks(bookResults);
+      setBooksWithAvailability(bookResults);
     }
   }
 
@@ -57,6 +76,7 @@ function BookSearch() {
           <th>Title</th>
           <th>Authors</th>
           <th>Actions</th>
+          <th>Available?</th>
         </tr>
       </thead>
     )
@@ -72,9 +92,10 @@ function BookSearch() {
               <td>{book.volumeInfo.authors}</td>
               <td>
                 <div>
-                  <button onClick={() => addBook(book)}>Add</button>
+                  <button onClick={() => addBook(book)} disabled={book.isAvailable} >Add</button>
                 </div>
               </td>
+              <td>{ book.isAvailable ? 'Yes': 'No' }</td>
             </tr>
           )
         })}

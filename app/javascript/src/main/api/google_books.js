@@ -15,8 +15,7 @@ function search(query) {
       return [];
     }
   }).catch((error) => {
-    // TODO: What to do in case of error?
-    console.log(error);
+    // console.log(error);
   });
 
   return {
