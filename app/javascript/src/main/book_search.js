@@ -64,7 +64,7 @@ function BookSearch() {
 
     axios({
       method: 'post',
-      url: `http://localhost:3000/api/v1/books`,
+      url: `https://shivang-bookx.herokuapp.com/api/v1/books`,
       data: JSON.stringify(data),
       headers: defaultHeaders,
     }).then((response) => {
