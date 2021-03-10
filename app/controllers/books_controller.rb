@@ -1,6 +1,5 @@
 class BooksController < ApplicationController
   # TODO: Are these action names making sense?
-  # TODO: Better name for packs?
 
   # Root/Landing page of App
   def main
@@ -8,7 +7,7 @@ class BooksController < ApplicationController
   end
 
   # Page to view all books in inventory & take necessary actions
-  def index
+  def manage_books
 
   end
 end
