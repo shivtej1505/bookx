@@ -12,7 +12,10 @@
 
 ActiveRecord::Schema.define(version: 2021_03_09_180054) do
 
-  create_table "books", charset: "utf8mb4", force: :cascade do |t|
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
+  create_table "books", force: :cascade do |t|
     t.string "google_id"
     t.string "title"
     t.integer "status"
