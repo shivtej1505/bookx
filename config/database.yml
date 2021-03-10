@@ -82,6 +82,4 @@ test:
 #
 production:
   <<: *default
-  database: bookx_production
-  username: bookx
-  password: <%= ENV['BOOKX_DATABASE_PASSWORD'] %>
+  url: <%= ENV['DATABASE_URL'] %>
